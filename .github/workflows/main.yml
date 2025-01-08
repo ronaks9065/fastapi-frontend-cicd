@@ -17,3 +17,105 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
+
+      - name: Configure AWS credentials via Role
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.OIDC_ROLE }}
+          role-session-name: github-actions-federation
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Log in to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Extract Git commit SHA
+        id: vars
+        run: echo "COMMIT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+      - name: Build Docker image with unique tag
+        run: |
+          docker build -t ${{ secrets.ECR_REPO_URI }}:${{ env.COMMIT_SHA }} .
+
+      - name: Push Docker image to ECR
+        run: |
+          docker push ${{ secrets.ECR_REPO_URI }}:${{ env.COMMIT_SHA }}
+
+  cd:
+    name: CD
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Configure AWS credentials via Role
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.OIDC_ROLE }}
+          role-session-name: github-actions-federation
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'latest'
+
+      # - name: Update kubeconfig
+      #   run: |
+      #     aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ secrets.EKS_CLUSTER_NAME }}
+
+      # - name: Clone private repository
+      #   env:
+      #     GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      #   run: |
+      #     git clone https://$GH_TOKEN@github.com/ronaks9065/fastapi-manifests.git
+
+      # - name: Extract Git commit SHA
+      #   id: vars
+      #   run: echo "COMMIT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+      
+      # - name: Update Kubernetes manifests with new image
+      #   run: |
+      #     sed -i "s|image:.*|image: ${{ secrets.ECR_REPO_URI }}:ronakghh|" fastapi-manifests/manifests/backend.yaml
+      #     # sed -i "s|image:.*|image: ${{ secrets.ECR_REPO_URI }}:${{ env.COMMIT_SHA }}|" fastapi-manifests/manifests/backend.yaml
+      
+      # - name: Commit and push updated manifests
+      #   run: |
+      #     cd fastapi-manifests
+      #     git config user.name "GitHub Actions"
+      #     git config user.email "actions@github.com"
+      #     git add .
+      #     git commit -m "Update image to ${{ secrets.ECR_REPO_URI }}:${{ env.COMMIT_SHA }}"
+      #     git push origin master
+
+      # - name: Apply Kubernetes manifests
+      #   id: apply-manifests
+      #   run: |
+      #     cd fastapi-manifests
+      #     kubectl apply -f manifests/ 
+      #     kubectl rollout status deployment/backend --timeout=60s
+
+      # - name: Rollback if deployment fails
+      #   if: failure()
+      #   run: |
+      #     echo "Rolling back to the last successful version..."
+      #     cd fastapi-manifests
+      #     PREVIOUS_TAG=$(cat last_successful_version.txt)
+      #     echo "Previous Tag: $PREVIOUS_TAG"
+      #     sed -i "s|image:.*|image: ${{ secrets.ECR_REPO_URI }}:${PREVIOUS_TAG}|" manifests/backend.yaml
+      #     git add .
+      #     git commit -m "Rollback to image ${{ secrets.ECR_REPO_URI }}:${PREVIOUS_TAG}"
+      #     git push origin master
+      #     kubectl apply -f manifests/
+      #     kubectl rollout status deployment/backend --timeout=60s
+
+      # - name: Save the new version if successful
+      #   if: success()
+      #   run: |
+      #     echo ${{ env.COMMIT_SHA }} > fastapi-manifests/last_successful_version.txt
+      #     cd fastapi-manifests
+      #     git add last_successful_version.txt
+      #     git commit -m "Update last successful version to ${{ env.COMMIT_SHA }}"
+      #     git push origin master
