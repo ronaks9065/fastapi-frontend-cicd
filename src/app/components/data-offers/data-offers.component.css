@@ -1,0 +1,5 @@
+.data-offers-container{
+    display: flex;
+    color: (--almost-black);
+    width: -webkit-fill-available;
+}

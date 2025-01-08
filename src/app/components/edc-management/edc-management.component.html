@@ -1,0 +1,38 @@
+
+<div class="edc-container">
+  <!-- Sidebar -->
+  <!-- <app-sidebar></app-sidebar> -->
+
+  <!-- Header Section -->
+  <div class="header-section">
+    @if(edcList.length === 0){
+      <p>No EDC available.</p>
+    }
+    <!-- <button
+      pButton
+      type="button"
+      label="Create EDC"
+      class="create-btn"
+      (click)="onCreateEDC()"
+    ></button> -->
+  </div>
+
+  <!-- Table Section -->
+  
+  <p-table [value]="edcList">
+    <ng-template pTemplate="header">
+      <tr>
+        @for (col of cols; track col.header) {
+          <th>{{ col.header }}</th>
+        }
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-edc>
+      <tr>
+        @for (col of cols; track col.field) {
+          <td>{{ edc[col.field] }}</td>
+        }
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

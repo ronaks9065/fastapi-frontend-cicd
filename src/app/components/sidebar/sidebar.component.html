@@ -1,0 +1,34 @@
+<div class="sidebar-container">
+  <!-- Logo -->
+  <div class="logo p-3 text-center">
+    <img src="assets/images/logos/mhp-logo.svg" alt="Logo" />
+  </div>
+
+  <div *ngIf="userInfo" class="p-3">
+    <div class="user-avatar">
+      <i class="pi pi-user" style="font-size: 2.5em;"></i>
+      <!-- <p class="m-3"> {{ userInfo.name || 'Unknown' }}</p> -->
+      <p class="m-3"> {{ userInfo.name || 'User006' }}</p>
+    </div>
+  </div>
+
+  <!-- Custom PrimeNG Menu -->
+  <p-menu [model]="menuItems" class="custom-menu p-3">
+    <ng-template let-item pTemplate="item">
+      <a
+        [routerLink]="item.routerLink"
+        class="menu-item"
+        [ngClass]="{ 'active-menu-item': currentUrl === item.routerLink }"
+      >
+        <i class="pr-3 pi" [ngClass]="item.icon"></i>
+        <span>{{ item.label }}</span>
+      </a>
+    </ng-template>
+  </p-menu>
+
+  <!-- Footer -->
+  <div class="footer mt-auto text-center p-2">
+    <p>&copy; 2024 EDCaaS</p>
+  </div>
+</div>
+

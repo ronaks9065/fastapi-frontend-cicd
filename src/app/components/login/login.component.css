@@ -1,0 +1,63 @@
+/* Page Background */
+.login-page {
+    background-color: var(--mhp-blue);
+    /* color: var(--white);
+    height: 100vh; */
+  }
+  
+  /* Login Card */
+  .login-card {
+    background-color: var(--white);
+    /* border: 1px solid var(--vital-trust); */
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    color: var(--almost-black);
+  }
+
+  /* Typography */
+  .welcome-text {
+    color: var(--mhp-blue);
+  }
+  
+  .subtitle {
+    color: var(--vital-trust);
+  }
+  
+  .create-account-link,
+  .forgot-password-link {
+    color: var(--vital-trust);
+    transition: color 0.3s;
+  }
+  
+  .create-account-link:hover,
+  .forgot-password-link:hover {
+    color: var(--vital-trust);
+  }
+  
+  /* Input Field */
+  .input-field {
+    padding: 0.75rem;
+    border: 1px solid var(--almost-black);
+    border-radius: 4px;
+    color: var(--mhp-blue);
+  }
+  
+  .input-field:focus {
+    border-color: var(--vital-trust);
+    outline: none;
+  }
+  
+  /* Button */
+  .sign-in-button {
+    background-color: var(--sprout-mint);
+    color: var(--white);
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .sign-in-button:hover {
+    background-color: var(--vital-trust);
+  }
+  

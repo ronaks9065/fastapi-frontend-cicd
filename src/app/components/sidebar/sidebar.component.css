@@ -1,0 +1,79 @@
+
+/* Sidebar Container */
+.sidebar-container {
+  height: 100vh;
+  background-color: #ffffff; /* Light background */
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #e0e0e0;
+}
+
+/* Logo */
+.logo img {
+  max-width: 120px;
+  filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.2));
+}
+
+/* Footer */
+.footer p {
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.custom-menu .menu-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+  text-decoration: none;
+  color: #333;
+}
+
+.custom-menu .menu-item:hover {
+  background-color: #f0f8ff;
+}
+
+.custom-menu .active-menu-item {
+  background-color: var(--mhp-blue);
+  color: #fff;
+  font-weight: bold;
+}
+.custom-menu .active-menu-item:hover {
+  background-color: var(--mhp-blue);
+  color: #fff;
+  font-weight: bold;
+}
+
+:host ::ng-deep .custom-menu .p-menu {
+  border: unset !important;
+  border-radius: unset !important;
+  /* min-width: 17.5rem !important; */
+}
+
+
+.user-profile {
+  background-color: #34495e;
+  border-radius: 8px;
+  margin-top: 20px;
+  padding: 15px;
+  text-align: center;
+}
+
+.user-avatar {
+  margin-bottom: 10px;
+  color: var(--mhp-blue);
+  display: inline-flex;
+}
+
+.user-details {
+  color: #ecf0f1;
+}
+
+.user-details p {
+  margin: 5px 0;
+}
+
+.user-details strong {
+  color: #f39c12;
+}

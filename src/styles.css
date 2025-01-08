@@ -1,0 +1,47 @@
+/* You can add global styles to this file, and also import other style files */
+/* PrimeIcons for icons */
+@import "primeicons/primeicons.css";
+@import "primeflex/primeflex.css";
+body {
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:root {
+  --mhp-blue: #000099;
+  --vital-trust: #1612ff;
+  --sprout-mint: #00cc67;
+  --kinetic-kiwi: #ddef03;
+  --zircon-lightest: #f0f3ff;
+  --zircon-light: #e4e9ff;
+  --zircon: #cdd6ff;
+  --white: #ffffff;
+  --almost-white: #f6f6f6;
+  --balanced-neutral: #575757;
+  --almost-black: #262626;
+  --font-family: "Frutiger LT Pro", sans-serif;
+}
+
+/* PrimeNG Button */
+.p-button {
+  background-color: var(--sprout-mint) !important;
+  border-color: var(--sprout-mint) !important;
+  color: var(--white) !important;
+}
+
+.p-button:hover {
+  background-color: var(--vital-trust) !important;
+  border-color: var(--vital-trust) !important;
+}
+
+/* PrimeNG Input */
+.p-inputtext {
+  border: 1px solid var(--almost-black);
+  border-radius: 4px;
+  color: var(--almost-black);
+}
+
+.p-inputtext:focus {
+  border-color: var(--vital-trust);
+}

@@ -1,0 +1,68 @@
+<!-- <app-sidebar></app-sidebar> -->
+
+<div class="step-container">
+  @if (step === 1) {
+  <div>
+    <h3>Create EDC - Step 1</h3>
+    <form [formGroup]="createEdcForm">
+      <div class="form-field">
+        <label for="name">Name</label>
+        <input id="name" pInputText formControlName="name" />
+        @if (createEdcForm.get('name')?.invalid
+        &&createEdcForm.get('name')?.touched) {
+        <small> Name is required</small>
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="myDeployment">My Deployment</label>
+        <input id="myDeployment" pInputText formControlName="myDeployment" />
+        @if (createEdcForm.get('myDeployment')?.invalid
+        &&createEdcForm.get('myDeployment')?.touched) {
+        <small> Deployment is required</small>
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="cloudProvider">Cloud Provider</label>
+        <p-dropdown
+          [options]="cloudProviders"
+          formControlName="cloudProvider"
+        ></p-dropdown>
+      </div>
+
+      <div class="form-field">
+        <label for="region">Region</label>
+        <p-dropdown [options]="regions" formControlName="region"></p-dropdown>
+      </div>
+
+      <div class="form-field">
+        <label for="hardwareProfile">Hardware Profile</label>
+        <p-dropdown
+          [options]="hardwareProfiles"
+          formControlName="hardwareProfile"
+        ></p-dropdown>
+      </div>
+
+      <div class="form-field">
+        <label for="version">Version</label>
+        <p-dropdown [options]="versions" formControlName="version"></p-dropdown>
+      </div>
+
+      <button
+        pButton
+        type="button"
+        label="Continue"
+        (click)="onNext()"
+        [disabled]="createEdcForm.invalid"
+      ></button>
+    </form>
+  </div>
+  } @if (step === 2) {
+  <div>
+    <h3>Review and Submit</h3>
+    <pre>{{ createEdcForm.value | json }}</pre>
+    <button pButton type="button" label="Submit" (click)="onSubmit()"></button>
+  </div>
+  }
+</div>

@@ -1,0 +1,13 @@
+@if(isAuthenticated){
+<div class="layout-container">
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
+  <!-- Main Content -->
+  <div class="main-content p-4">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+}
+@else{
+  <router-outlet></router-outlet>
+}
