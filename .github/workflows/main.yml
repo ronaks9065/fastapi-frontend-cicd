@@ -1,0 +1,19 @@
+name: CI/CD Pipeline
+  
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  contents: read 
+  id-token: write
+ 
+jobs:
+  build-and-push:
+    name: CI
+    runs-on: ubuntu-latest
+  
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
